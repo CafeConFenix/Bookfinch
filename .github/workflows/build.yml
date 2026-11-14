@@ -47,3 +47,41 @@ jobs:
           path: |
             Bookfinch-portable.zip
             Bookfinch-onefile.zip
+
+  release:
+    # Runs only when a version tag such as v1.0.0 is pushed
+    needs: windows
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: Bookfinch-windows
+          path: artifacts
+      - name: Check that the tag matches the package version
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          PKG_VERSION="$(python3 -c 'import bookfinch; print(bookfinch.__version__)')"
+          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match bookfinch.__version__ ($PKG_VERSION)"
+            exit 1
+          fi
+      - name: Extract release notes from CHANGELOG.md
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          awk -v v="$TAG_VERSION" '/^## /{p=($2==v)} /^---$/{p=0} /^# /{p=0} p' CHANGELOG.md | tail -n +2 > notes.md
+          if [ ! -s notes.md ]; then echo "Release $TAG_VERSION of Bookfinch." > notes.md; fi
+          cat notes.md
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          mv artifacts/Bookfinch-portable.zip "artifacts/Bookfinch-$TAG_VERSION-portable-folder.zip"
+          mv artifacts/Bookfinch-onefile.zip "artifacts/Bookfinch-$TAG_VERSION-single-exe.zip"
+          gh release create "$GITHUB_REF_NAME" artifacts/*.zip \
+            --title "Bookfinch $TAG_VERSION" \
+            --notes-file notes.md

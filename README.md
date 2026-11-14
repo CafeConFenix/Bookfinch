@@ -83,6 +83,15 @@ The script creates an isolated environment, installs PyInstaller, **runs the tes
 tests on Python 3.9–3.13 and builds on Windows, leaving both zips as an *artifact* of the run (*Actions* tab).
 You can also trigger it manually with *Run workflow*.
 
+**Publishing a release:** make sure `bookfinch/__init__.py` and `CHANGELOG.md` have the new version, then push a tag.
+The workflow builds the `.exe`, checks that the tag matches the package version and creates the GitHub release with both zips
+and the matching section of `CHANGELOG.md` as release notes:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
 If Windows SmartScreen warns about an "unknown publisher", that is normal for unsigned programs:
 *More info → Run anyway*.
 
