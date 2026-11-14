@@ -23,6 +23,9 @@ OAPEN, LibriVox, Wikimedia Commons, Library of Congress, Gallica/BnF, Unglue.it,
 textos.info, Feedbooks, Wikibooks, DSpace repositories (Digital.CSIC, e-Archivo UC3M) and CORE.
 It merges duplicates, ranks the results by relevance and lets you download the format you want.
 
+<img width="1078" height="720" alt="Captura de pantalla 2026-11-14 111035" src="https://github.com/user-attachments/assets/f3cd65ab-a851-4451-b84a-c11bc53ad91b" />
+
+
 ## Features
 
 - **21 sources queried in parallel**, with live progress and clear reporting of which sources did not answer.
