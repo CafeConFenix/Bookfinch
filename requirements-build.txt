@@ -1,0 +1,2 @@
+# Only needed to build the .exe (the app itself has no dependencies)
+pyinstaller>=6.11,<7

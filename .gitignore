@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+
+# Build output and build environment
+build/
+dist/
+.venv-build/
+.venv/
+
+# Runtime data (portable mode writes here when run from the repository)
+data/
+*.log
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

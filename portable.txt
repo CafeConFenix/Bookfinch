@@ -1,0 +1,7 @@
+This file enables Bookfinch's PORTABLE MODE.
+
+As long as it sits next to Bookfinch.exe, settings, search history and the error log
+are stored in the "data" folder beside it, without touching the rest of the computer.
+You can copy the whole folder to a USB stick and take it with you.
+
+To store the data in %APPDATA%\Bookfinch instead, delete this file.
